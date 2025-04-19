@@ -1,12 +1,13 @@
 // Firebase configuration (replace with your own configuration from Firebase Console)
+// Import the functions you need from the SDKs you need
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBX23Wb2QQpdiS50Ta2grjxu8LELNlneww",
+  authDomain: "private-chat-4c475.firebaseapp.com",
+  databaseURL: "https://private-chat-4c475-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "private-chat-4c475",
+  storageBucket: "private-chat-4c475.firebasestorage.app",
+  messagingSenderId: "303322714070",
+  appId: "1:303322714070:web:4a1cc32e85bf5eec935e77"
 };
 
 // Initialize Firebase
