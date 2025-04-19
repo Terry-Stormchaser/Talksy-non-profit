@@ -1,4 +1,4 @@
-let specialCode = "A330"; // Special code to join chat
+let specialCode = "mySecretCode"; // Special code to join chat
 let adminAccessCode = "7879"; // Admin code to access admin panel
 let currentUserName = ""; // Current user's name
 let activeUsers = []; // List of active users
