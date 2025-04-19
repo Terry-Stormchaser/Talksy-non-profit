@@ -26,6 +26,30 @@ body {
   padding: 10px;
 }
 
+#admin-button {
+  background-color: orange;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#admin-button:hover {
+  background-color: darkorange;
+}
+
+/* Admin Panel */
+#admin-panel {
+  display: none;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 5px;
+  width: 80%;
+  text-align: center;
+}
+
 #clear-chat-button {
   background-color: red;
   color: white;
@@ -57,37 +81,13 @@ body {
 }
 
 .message.sent {
-  background-color: #dcf8c6; /* Green background for sent messages */
+  background-color: #dcf8c6;
   text-align: right;
   margin-left: auto;
 }
 
 .message.received {
-  background-color: #f1f0f0; /* Grey background for received messages */
+  background-color: #f1f0f0;
   text-align: left;
   margin-right: auto;
-}
-
-/* Chat Input Styling */
-#chat-input {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-#message-input {
-  width: 70%;
-  padding: 10px;
-}
-
-#send-button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-
-#send-button:hover {
-  background-color: #0056b3;
 }
