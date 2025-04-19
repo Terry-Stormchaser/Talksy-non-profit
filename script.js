@@ -1,8 +1,22 @@
-const specialCode = "mySecretCode"; // Special code to join chat
-const adminAccessCode = "7879"; // Admin code to access admin panel
+// Firebase configuration (replace with your own configuration)
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
 
-let currentUserName = ""; // Store the current user's name
+// Initialize Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+// DOM elements
 const loginButton = document.getElementById("login-button");
 const accessCodeInput = document.getElementById("access-code");
 const nameInput = document.getElementById("name-input");
@@ -13,78 +27,49 @@ const chatBox = document.getElementById("chat-box");
 const messageInput = document.getElementById("message-input");
 const sendButton = document.getElementById("send-button");
 
-// Admin panel elements
-const adminIcon = document.getElementById("admin-icon");
-const adminCodePrompt = document.getElementById("admin-code-prompt");
-const adminCodeInput = document.getElementById("admin-code-input");
-const verifyAdminCodeButton = document.getElementById("verify-admin-code-button");
-const cancelAdminCodeButton = document.getElementById("cancel-admin-code-button");
-const adminCodeError = document.getElementById("admin-code-error");
-const adminPanel = document.getElementById("admin-panel");
-const closeAdminPanelButton = document.getElementById("close-admin-panel");
+let currentUserName = ""; // Store the current user's name
 
 // Login functionality
 loginButton.addEventListener("click", () => {
-  const enteredName = nameInput.value.trim();
-  const enteredCode = accessCodeInput.value.trim();
+    const enteredName = nameInput.value.trim();
+    const enteredCode = accessCodeInput.value.trim();
 
-  if (!enteredName) {
-    errorMessage.textContent = "Please enter your name.";
-    return;
-  }
+    if (!enteredName) {
+        errorMessage.textContent = "Please enter your name.";
+        return;
+    }
 
-  if (enteredCode === specialCode) {
-    currentUserName = enteredName;
-    loginScreen.style.display = "none";
-    chatScreen.style.display = "block";
-  } else {
-    errorMessage.textContent = "Incorrect code. Please try again.";
-  }
+    if (enteredCode === "mySecretCode") {
+        currentUserName = enteredName;
+        loginScreen.style.display = "none";
+        chatScreen.style.display = "block";
+
+        // Listen for new messages
+        const messagesRef = ref(database, 'messages');
+        onChildAdded(messagesRef, (snapshot) => {
+            const message = snapshot.val();
+            addMessage(message.user, message.text, message.user === currentUserName ? "sent" : "received");
+        });
+    } else {
+        errorMessage.textContent = "Incorrect code. Please try again.";
+    }
 });
 
 // Send message functionality
 sendButton.addEventListener("click", () => {
-  const message = messageInput.value.trim();
-  if (message) {
-    addMessage(currentUserName, message, "sent");
-    messageInput.value = "";
-  }
+    const message = messageInput.value.trim();
+    if (message) {
+        const messagesRef = ref(database, 'messages');
+        push(messagesRef, { user: currentUserName, text: message });
+        messageInput.value = "";
+    }
 });
 
+// Function to display messages
 function addMessage(name, message, type) {
-  const messageElement = document.createElement("div");
-  messageElement.classList.add("message", type);
-  messageElement.innerHTML = `<strong>${name}:</strong> ${message}`;
-  chatBox.appendChild(messageElement);
-  chatBox.scrollTop = chatBox.scrollHeight;
+    const messageElement = document.createElement("div");
+    messageElement.classList.add("message", type);
+    messageElement.innerHTML = `<strong>${name}:</strong> ${message}`;
+    chatBox.appendChild(messageElement);
+    chatBox.scrollTop = chatBox.scrollHeight;
 }
-
-// Admin icon click
-adminIcon.addEventListener("click", () => {
-  adminCodePrompt.style.display = "block"; // Show the admin code prompt
-});
-
-// Verify the admin code
-verifyAdminCodeButton.addEventListener("click", () => {
-  const enteredAdminCode = adminCodeInput.value.trim();
-  if (enteredAdminCode === adminAccessCode) {
-    adminCodePrompt.style.display = "none"; // Hide the prompt
-    adminPanel.style.display = "block"; // Show the admin panel
-    adminCodeInput.value = ""; // Clear the input
-    adminCodeError.textContent = ""; // Clear any errors
-  } else {
-    adminCodeError.textContent = "Incorrect admin code. Please try again.";
-  }
-});
-
-// Cancel the admin code prompt
-cancelAdminCodeButton.addEventListener("click", () => {
-  adminCodePrompt.style.display = "none"; // Hide the prompt
-  adminCodeInput.value = ""; // Clear the input
-  adminCodeError.textContent = ""; // Clear any errors
-});
-
-// Close the admin panel
-closeAdminPanelButton.addEventListener("click", () => {
-  adminPanel.style.display = "none"; // Hide the admin panel
-});
