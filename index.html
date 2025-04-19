@@ -9,17 +9,45 @@
 <body>
   <div id="login-screen">
     <h1>Welcome to Private Chat</h1>
-    <p>Enter the special code to join:</p>
+    <p>Enter your name and the special code to join:</p>
+    <input type="text" id="name-input" placeholder="Enter your name">
     <input type="password" id="access-code" placeholder="Enter Code">
     <button id="login-button">Enter Chat</button>
     <p id="error-message"></p>
   </div>
 
   <div id="chat-screen" style="display: none;">
-    <h1>Private Chat</h1>
+    <div id="chat-header">
+      <h1>Private Chat</h1>
+      <button id="admin-panel-button" style="display: none;">Admin Panel</button>
+    </div>
     <div id="chat-box"></div>
-    <input type="text" id="message-input" placeholder="Type a message...">
-    <button id="send-button">Send</button>
+    <div id="chat-input">
+      <input type="text" id="message-input" placeholder="Type a message...">
+      <button id="send-button">Send</button>
+    </div>
+  </div>
+
+  <div id="admin-panel" style="display: none;">
+    <h2>Admin Panel</h2>
+    <div>
+      <h3>Remove Users</h3>
+      <ul id="user-list"></ul>
+    </div>
+    <div>
+      <h3>Change Special Code</h3>
+      <input type="text" id="new-code-input" placeholder="Enter new special code">
+      <button id="change-code-button">Change Code</button>
+    </div>
+    <button id="close-admin-panel">Close Admin Panel</button>
+  </div>
+
+  <div id="admin-code-prompt" style="display: none;">
+    <h2>Admin Code Required</h2>
+    <input type="password" id="admin-code-input" placeholder="Enter Admin Code">
+    <button id="verify-admin-code-button">Submit</button>
+    <button id="cancel-admin-code-button">Cancel</button>
+    <p id="admin-code-error"></p>
   </div>
 
   <script src="script.js"></script>
