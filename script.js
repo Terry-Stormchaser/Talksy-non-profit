@@ -30,15 +30,11 @@ const chatBox = document.getElementById("chat-box");
 const messageInput = document.getElementById("message-input");
 const sendButton = document.getElementById("send-button");
 const typingIndicator = document.getElementById("typing-indicator");
-const adminIcon = document.getElementById("admin-icon");
-const adminPanel = document.getElementById("admin-panel");
 const clearChatButton = document.getElementById("clear-chat-button");
-const changeCodeButton = document.getElementById("change-code-button");
-const newCodeInput = document.getElementById("new-code-input");
 
 let currentUserName = ""; // Store the current user's name
 let currentAccessCode = "A330"; // Default access code
-let typingTimeout; // Timeout for typing indicator
+const adminName = "lukeandwoofy"; // Admin username (your GitHub username)
 
 // Login functionality
 loginButton.addEventListener("click", () => {
@@ -52,6 +48,10 @@ loginButton.addEventListener("click", () => {
 
   if (enteredCode === currentAccessCode) {
     currentUserName = enteredName;
+
+    if (currentUserName === adminName) {
+      clearChatButton.style.display = "block"; // Show "Clear All Messages" button for admin
+    }
 
     // Sign in anonymously with Firebase Authentication
     signInAnonymously(auth).then(() => {
@@ -73,28 +73,14 @@ loginButton.addEventListener("click", () => {
   }
 });
 
-// Admin panel toggle functionality
-adminIcon.addEventListener("click", () => {
-  adminPanel.style.display = adminPanel.style.display === "none" || !adminPanel.style.display ? "block" : "none";
-});
-
-// Clear chat functionality
+// Clear chat functionality (admin only)
 clearChatButton.addEventListener("click", () => {
-  const messagesRef = ref(database, 'messages');
-  remove(messagesRef).then(() => {
-    chatBox.innerHTML = ""; // Clear the chat box UI
-  });
-});
-
-// Change access code functionality
-changeCodeButton.addEventListener("click", () => {
-  const newCode = newCodeInput.value.trim();
-  if (newCode) {
-    currentAccessCode = newCode;
-    alert("Access code updated successfully!");
-    newCodeInput.value = ""; // Clear the input field
-  } else {
-    alert("Please enter a valid access code.");
+  if (currentUserName === adminName) {
+    const messagesRef = ref(database, 'messages');
+    remove(messagesRef).then(() => {
+      chatBox.innerHTML = ""; // Clear the chat box UI
+      alert("All messages have been cleared.");
+    });
   }
 });
 
