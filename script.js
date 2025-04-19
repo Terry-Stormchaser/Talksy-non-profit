@@ -1,4 +1,4 @@
-// Firebase configuration (replace with your own configuration)
+// Firebase configuration (replace with your own configuration from Firebase Console)
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
     authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
@@ -16,7 +16,7 @@ import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/fi
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-// DOM elements
+// DOM Elements
 const loginButton = document.getElementById("login-button");
 const accessCodeInput = document.getElementById("access-code");
 const nameInput = document.getElementById("name-input");
