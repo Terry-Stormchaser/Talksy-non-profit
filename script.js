@@ -43,7 +43,7 @@ loginButton.addEventListener("click", () => {
         return;
     }
 
-    if (enteredCode === "mySecretCode") {
+    if (enteredCode === "A330") {
         currentUserName = enteredName;
 
         // Sign in anonymously with Firebase Authentication
