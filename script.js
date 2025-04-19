@@ -1,16 +1,65 @@
-// Select relevant elements
+const specialCode = "mySecretCode"; // Special code to join chat
+const adminAccessCode = "7879"; // Admin code to access admin panel
+
+let currentUserName = ""; // Store the current user's name
+
+const loginButton = document.getElementById("login-button");
+const accessCodeInput = document.getElementById("access-code");
+const nameInput = document.getElementById("name-input");
+const errorMessage = document.getElementById("error-message");
+const loginScreen = document.getElementById("login-screen");
+const chatScreen = document.getElementById("chat-screen");
+const chatBox = document.getElementById("chat-box");
+const messageInput = document.getElementById("message-input");
+const sendButton = document.getElementById("send-button");
+
+// Admin panel elements
 const adminIcon = document.getElementById("admin-icon");
 const adminCodePrompt = document.getElementById("admin-code-prompt");
-const adminPanel = document.getElementById("admin-panel");
 const adminCodeInput = document.getElementById("admin-code-input");
 const verifyAdminCodeButton = document.getElementById("verify-admin-code-button");
 const cancelAdminCodeButton = document.getElementById("cancel-admin-code-button");
 const adminCodeError = document.getElementById("admin-code-error");
+const adminPanel = document.getElementById("admin-panel");
 const closeAdminPanelButton = document.getElementById("close-admin-panel");
 
-const adminAccessCode = "7879"; // Admin code to access admin panel
+// Login functionality
+loginButton.addEventListener("click", () => {
+  const enteredName = nameInput.value.trim();
+  const enteredCode = accessCodeInput.value.trim();
 
-// Add functionality to the plane icon
+  if (!enteredName) {
+    errorMessage.textContent = "Please enter your name.";
+    return;
+  }
+
+  if (enteredCode === specialCode) {
+    currentUserName = enteredName;
+    loginScreen.style.display = "none";
+    chatScreen.style.display = "block";
+  } else {
+    errorMessage.textContent = "Incorrect code. Please try again.";
+  }
+});
+
+// Send message functionality
+sendButton.addEventListener("click", () => {
+  const message = messageInput.value.trim();
+  if (message) {
+    addMessage(currentUserName, message, "sent");
+    messageInput.value = "";
+  }
+});
+
+function addMessage(name, message, type) {
+  const messageElement = document.createElement("div");
+  messageElement.classList.add("message", type);
+  messageElement.innerHTML = `<strong>${name}:</strong> ${message}`;
+  chatBox.appendChild(messageElement);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+// Admin icon click
 adminIcon.addEventListener("click", () => {
   adminCodePrompt.style.display = "block"; // Show the admin code prompt
 });
