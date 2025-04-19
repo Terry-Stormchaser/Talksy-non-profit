@@ -6,11 +6,39 @@ body {
   padding: 0;
 }
 
-#chat-screen, #admin-panel {
+#login-screen, #chat-screen {
   text-align: center;
   padding: 20px;
 }
 
+#error-message {
+  color: red;
+  font-size: 14px;
+}
+
+/* Chat Header */
+#chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+}
+
+#clear-chat-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#clear-chat-button:hover {
+  background-color: darkred;
+}
+
+/* Chat Box Styling */
 #chat-box {
   border: 1px solid #ddd;
   height: 400px;
@@ -38,4 +66,28 @@ body {
   background-color: #f1f0f0; /* Grey background for received messages */
   text-align: left;
   margin-right: auto;
+}
+
+/* Chat Input Styling */
+#chat-input {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+#message-input {
+  width: 70%;
+  padding: 10px;
+}
+
+#send-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+#send-button:hover {
+  background-color: #0056b3;
 }
