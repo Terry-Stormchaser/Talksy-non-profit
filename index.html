@@ -4,52 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Private Chat</title>
-  <!-- Include Fredoka Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js"></script>
 </head>
 <body>
   <div id="login-screen">
-    <h1>Welcome to Private Chat</h1>
+    <h1>Private Chat</h1>
     <p>Enter your name and the special code to join:</p>
     <input type="text" id="name-input" placeholder="Enter your name">
     <input type="password" id="access-code" placeholder="Enter Code">
-    <button id="login-button">Enter Chat</button>
+    <button id="login-button">Join Chat</button>
     <p id="error-message"></p>
   </div>
 
   <div id="chat-screen" style="display: none;">
     <div id="chat-header">
-      <h1>Private Chat</h1>
-      <span id="admin-icon" title="Admin Panel" style="cursor: pointer;">✈️</span>
+      <h1>Chat Room</h1>
     </div>
     <div id="chat-box"></div>
     <div id="chat-input">
       <input type="text" id="message-input" placeholder="Type a message...">
       <button id="send-button">Send</button>
     </div>
-  </div>
-
-  <div id="admin-panel" style="display: none;">
-    <h2>Admin Panel</h2>
-    <div>
-      <h3>Remove Users</h3>
-      <ul id="user-list"></ul>
-    </div>
-    <div>
-      <h3>Change Special Code</h3>
-      <input type="text" id="new-code-input" placeholder="Enter new special code">
-      <button id="change-code-button">Change Code</button>
-    </div>
-    <button id="close-admin-panel">Close Admin Panel</button>
-  </div>
-
-  <div id="admin-code-prompt" style="display: none;">
-    <h2>Admin Code Required</h2>
-    <input type="password" id="admin-code-input" placeholder="Enter Admin Code">
-    <button id="verify-admin-code-button">Submit</button>
-    <button id="cancel-admin-code-button">Cancel</button>
-    <p id="admin-code-error"></p>
   </div>
 
   <script src="script.js"></script>
