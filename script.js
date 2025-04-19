@@ -1,4 +1,4 @@
-const specialCode = "mySecretCode";
+const specialCode = "A330";
 const loginButton = document.getElementById("login-button");
 const accessCodeInput = document.getElementById("access-code");
 const errorMessage = document.getElementById("error-message");
