@@ -72,6 +72,7 @@ loginButton.addEventListener("click", () => {
 
 // Admin panel toggle functionality
 adminIcon.addEventListener("click", () => {
+    console.log("Admin icon clicked!"); // Debugging log
     if (adminPanel.style.display === "none" || adminPanel.style.display === "") {
         adminPanel.style.display = "block";
     } else {
