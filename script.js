@@ -30,14 +30,11 @@ const chatBox = document.getElementById("chat-box");
 const messageInput = document.getElementById("message-input");
 const sendButton = document.getElementById("send-button");
 const typingIndicator = document.getElementById("typing-indicator");
-const adminButton = document.getElementById("admin-button");
-const adminPanel = document.getElementById("admin-panel");
 const clearChatButton = document.getElementById("clear-chat-button");
-const toggleDarkModeButton = document.getElementById("toggle-dark-mode");
 
 let currentUserName = ""; // Store the current user's name
 let currentAccessCode = "A330"; // Default access code
-const adminPassword = "admin123"; // Admin password
+const adminName = "lukeandwoofy"; // Admin username (your GitHub username)
 
 // Login functionality
 loginButton.addEventListener("click", () => {
@@ -51,6 +48,10 @@ loginButton.addEventListener("click", () => {
 
   if (enteredCode === currentAccessCode) {
     currentUserName = enteredName;
+
+    if (currentUserName === adminName) {
+      clearChatButton.style.display = "block"; // Show "Clear All Messages" button for admin
+    }
 
     // Sign in anonymously with Firebase Authentication
     signInAnonymously(auth).then(() => {
@@ -72,29 +73,15 @@ loginButton.addEventListener("click", () => {
   }
 });
 
-// Admin panel access functionality
-adminButton.addEventListener("click", () => {
-  const enteredPassword = prompt("Enter admin password:");
-  if (enteredPassword === adminPassword) {
-    adminPanel.style.display = "block";
-    alert("Welcome to the admin panel!");
-  } else {
-    alert("Incorrect password. Access denied.");
-  }
-});
-
 // Clear chat functionality (admin only)
 clearChatButton.addEventListener("click", () => {
-  const messagesRef = ref(database, 'messages');
-  remove(messagesRef).then(() => {
-    chatBox.innerHTML = ""; // Clear the chat box UI
-    alert("All messages have been cleared.");
-  });
-});
-
-// Toggle dark mode functionality
-toggleDarkModeButton.addEventListener("click", () => {
-  document.body.classList.toggle("dark-mode");
+  if (currentUserName === adminName) {
+    const messagesRef = ref(database, 'messages');
+    remove(messagesRef).then(() => {
+      chatBox.innerHTML = ""; // Clear the chat box UI
+      alert("All messages have been cleared.");
+    });
+  }
 });
 
 // Send message functionality
