@@ -11,10 +11,12 @@ const firebaseConfig = {
 
 // Initialize Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+import { getDatabase, ref, push, onChildAdded, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
+const auth = getAuth(app);
 
 // DOM Elements
 const loginButton = document.getElementById("login-button");
@@ -26,8 +28,10 @@ const chatScreen = document.getElementById("chat-screen");
 const chatBox = document.getElementById("chat-box");
 const messageInput = document.getElementById("message-input");
 const sendButton = document.getElementById("send-button");
+const typingIndicator = document.getElementById("typing-indicator");
 
 let currentUserName = ""; // Store the current user's name
+let typingTimeout; // Timeout for typing indicator
 
 // Login functionality
 loginButton.addEventListener("click", () => {
@@ -41,15 +45,23 @@ loginButton.addEventListener("click", () => {
 
     if (enteredCode === "mySecretCode") {
         currentUserName = enteredName;
-        loginScreen.style.display = "none";
-        chatScreen.style.display = "block";
 
-        // Listen for new messages
-        const messagesRef = ref(database, 'messages');
-        onChildAdded(messagesRef, (snapshot) => {
-            const message = snapshot.val();
-            addMessage(message.user, message.text, message.user === currentUserName ? "sent" : "received");
+        // Sign in anonymously with Firebase Authentication
+        signInAnonymously(auth).then(() => {
+            loginScreen.style.display = "none";
+            chatScreen.style.display = "block";
+
+            // Listen for new messages
+            const messagesRef = ref(database, 'messages');
+            onChildAdded(messagesRef, (snapshot) => {
+                const message = snapshot.val();
+                const formattedTime = new Date(message.timestamp).toLocaleTimeString();
+                addMessage(message.user, message.text, formattedTime, message.user === currentUserName ? "sent" : "received");
+            });
+        }).catch((error) => {
+            errorMessage.textContent = `Login failed: ${error.message}`;
         });
+
     } else {
         errorMessage.textContent = "Incorrect code. Please try again.";
     }
@@ -60,16 +72,55 @@ sendButton.addEventListener("click", () => {
     const message = messageInput.value.trim();
     if (message) {
         const messagesRef = ref(database, 'messages');
-        push(messagesRef, { user: currentUserName, text: message });
+        push(messagesRef, {
+            user: currentUserName,
+            text: message,
+            timestamp: serverTimestamp()
+        });
         messageInput.value = "";
     }
 });
 
+// Add "user is typing..." functionality
+messageInput.addEventListener("input", () => {
+    const typingRef = ref(database, 'typing');
+    push(typingRef, { user: currentUserName });
+
+    clearTimeout(typingTimeout);
+    typingTimeout = setTimeout(() => {
+        // Clear typing indicator after 3 seconds of inactivity
+        const clearTypingRef = ref(database, 'typing');
+        push(clearTypingRef, { user: null });
+    }, 3000);
+});
+
+// Listen for typing indicator updates
+const typingRef = ref(database, 'typing');
+onChildAdded(typingRef, (snapshot) => {
+    const typingData = snapshot.val();
+    if (typingData.user && typingData.user !== currentUserName) {
+        typingIndicator.textContent = `${typingData.user} is typing...`;
+        clearTimeout(typingTimeout);
+        typingTimeout = setTimeout(() => {
+            typingIndicator.textContent = '';
+        }, 3000);
+    } else {
+        typingIndicator.textContent = ''; // Clear indicator
+    }
+});
+
 // Function to display messages
-function addMessage(name, message, type) {
+function addMessage(name, message, timestamp, type) {
     const messageElement = document.createElement("div");
     messageElement.classList.add("message", type);
-    messageElement.innerHTML = `<strong>${name}:</strong> ${message}`;
+    messageElement.innerHTML = `<strong>${name}:</strong> ${message} <span class="timestamp">${timestamp}</span>`;
     chatBox.appendChild(messageElement);
     chatBox.scrollTop = chatBox.scrollHeight;
 }
+
+// Firebase Authentication state listener
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        console.log("Logged in as:", user.uid);
+    }
+});
