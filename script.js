@@ -33,6 +33,7 @@ const typingIndicator = document.getElementById("typing-indicator");
 const adminButton = document.getElementById("admin-button");
 const adminPanel = document.getElementById("admin-panel");
 const clearChatButton = document.getElementById("clear-chat-button");
+const toggleDarkModeButton = document.getElementById("toggle-dark-mode");
 
 let currentUserName = ""; // Store the current user's name
 let currentAccessCode = "A330"; // Default access code
@@ -89,6 +90,11 @@ clearChatButton.addEventListener("click", () => {
     chatBox.innerHTML = ""; // Clear the chat box UI
     alert("All messages have been cleared.");
   });
+});
+
+// Toggle dark mode functionality
+toggleDarkModeButton.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
 });
 
 // Send message functionality
