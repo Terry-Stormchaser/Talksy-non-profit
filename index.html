@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Private Chat</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="login-screen">
+    <h1>Welcome to Private Chat</h1>
+    <p>Enter the special code to join:</p>
+    <input type="password" id="access-code" placeholder="Enter Code">
+    <button id="login-button">Enter Chat</button>
+    <p id="error-message"></p>
+  </div>
+
+  <div id="chat-screen" style="display: none;">
+    <h1>Private Chat</h1>
+    <div id="chat-box"></div>
+    <input type="text" id="message-input" placeholder="Type a message...">
+    <button id="send-button">Send</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
