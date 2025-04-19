@@ -30,6 +30,9 @@ const chatBox = document.getElementById("chat-box");
 const messageInput = document.getElementById("message-input");
 const sendButton = document.getElementById("send-button");
 const typingIndicator = document.getElementById("typing-indicator");
+const adminIcon = document.getElementById("admin-icon");
+const adminPanel = document.getElementById("admin-panel");
+const changeCodeButton = document.getElementById("change-code-button");
 
 let currentUserName = ""; // Store the current user's name
 let typingTimeout; // Timeout for typing indicator
@@ -107,6 +110,15 @@ onChildAdded(typingRef, (snapshot) => {
         }, 3000);
     } else {
         typingIndicator.textContent = ''; // Clear indicator
+    }
+});
+
+// Admin panel toggle functionality
+adminIcon.addEventListener("click", () => {
+    if (adminPanel.style.display === "none" || adminPanel.style.display === "") {
+        adminPanel.style.display = "block";
+    } else {
+        adminPanel.style.display = "none";
     }
 });
 
