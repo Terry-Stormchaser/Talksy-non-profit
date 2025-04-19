@@ -1,10 +1,127 @@
-/* Add styles for the admin code prompt */
-#admin-code-prompt {
-  text-align: center;
-  background-color: white;
-  border: 1px solid #ddd;
-  padding: 20px;
-  margin: 20px auto;
-  border-radius: 5px;
-  width: 50%;
+let specialCode = "mySecretCode"; // Special code to join chat
+let adminAccessCode = "7879"; // Admin code to access admin panel
+const adminName = "admin"; // Admin's name
+let currentUserName = ""; // Current user's name
+let activeUsers = []; // List of active users
+
+const loginButton = document.getElementById("login-button");
+const accessCodeInput = document.getElementById("access-code");
+const nameInput = document.getElementById("name-input");
+const errorMessage = document.getElementById("error-message");
+const loginScreen = document.getElementById("login-screen");
+const chatScreen = document.getElementById("chat-screen");
+const chatBox = document.getElementById("chat-box");
+const messageInput = document.getElementById("message-input");
+const sendButton = document.getElementById("send-button");
+const adminPanelButton = document.getElementById("admin-panel-button");
+const adminPanel = document.getElementById("admin-panel");
+const userList = document.getElementById("user-list");
+const newCodeInput = document.getElementById("new-code-input");
+const changeCodeButton = document.getElementById("change-code-button");
+const closeAdminPanelButton = document.getElementById("close-admin-panel");
+const adminCodePrompt = document.getElementById("admin-code-prompt");
+const adminCodeInput = document.getElementById("admin-code-input");
+const verifyAdminCodeButton = document.getElementById("verify-admin-code-button");
+const cancelAdminCodeButton = document.getElementById("cancel-admin-code-button");
+const adminCodeError = document.getElementById("admin-code-error");
+
+loginButton.addEventListener("click", () => {
+  const enteredCode = accessCodeInput.value;
+  const enteredName = nameInput.value.trim();
+
+  if (!enteredName) {
+    errorMessage.textContent = "Please enter your name.";
+    return;
+  }
+
+  if (enteredCode === specialCode) {
+    currentUserName = enteredName;
+    activeUsers.push(currentUserName);
+    updateUserList();
+
+    loginScreen.style.display = "none";
+    chatScreen.style.display = "block";
+
+    // Show admin panel button if admin
+    if (currentUserName.toLowerCase() === adminName.toLowerCase()) {
+      adminPanelButton.style.display = "inline-block";
+    }
+  } else {
+    errorMessage.textContent = "Incorrect code. Please try again.";
+  }
+});
+
+sendButton.addEventListener("click", () => {
+  const message = messageInput.value.trim();
+  if (message) {
+    addMessage(currentUserName, message, "sent");
+    messageInput.value = "";
+  }
+});
+
+function addMessage(name, message, type) {
+  const messageElement = document.createElement("div");
+  messageElement.classList.add("message", type);
+  messageElement.innerHTML = `<strong>${name}:</strong> ${message}`;
+  chatBox.appendChild(messageElement);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+// Admin panel button click
+adminPanelButton.addEventListener("click", () => {
+  adminCodePrompt.style.display = "block"; // Show admin code prompt
+});
+
+// Verify admin code
+verifyAdminCodeButton.addEventListener("click", () => {
+  const enteredAdminCode = adminCodeInput.value.trim();
+  if (enteredAdminCode === adminAccessCode) {
+    adminCodePrompt.style.display = "none"; // Hide prompt
+    adminPanel.style.display = "block"; // Show admin panel
+    adminCodeInput.value = ""; // Clear input
+    adminCodeError.textContent = ""; // Clear error
+  } else {
+    adminCodeError.textContent = "Incorrect admin code.";
+  }
+});
+
+// Cancel admin code prompt
+cancelAdminCodeButton.addEventListener("click", () => {
+  adminCodePrompt.style.display = "none"; // Hide prompt
+  adminCodeInput.value = ""; // Clear input
+  adminCodeError.textContent = ""; // Clear error
+});
+
+// Close admin panel
+closeAdminPanelButton.addEventListener("click", () => {
+  adminPanel.style.display = "none";
+});
+
+// Change special code
+changeCodeButton.addEventListener("click", () => {
+  const newCode = newCodeInput.value.trim();
+  if (newCode) {
+    specialCode = newCode;
+    alert("Special code changed successfully!");
+    newCodeInput.value = "";
+  }
+});
+
+function updateUserList() {
+  userList.innerHTML = "";
+  activeUsers.forEach((user) => {
+    const userItem = document.createElement("li");
+    userItem.textContent = user;
+    if (user !== adminName) {
+      const removeButton = document.createElement("button");
+      removeButton.textContent = "Remove";
+      removeButton.addEventListener("click", () => {
+        activeUsers = activeUsers.filter((u) => u !== user);
+        updateUserList();
+        alert(`${user} has been removed.`);
+      });
+      userItem.appendChild(removeButton);
+    }
+    userList.appendChild(userItem);
+  });
 }
