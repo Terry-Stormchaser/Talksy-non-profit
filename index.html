@@ -5,13 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Private Chat</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js"></script>
+  
+  <!-- Firebase Compatibility Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 </head>
 <body>
   <div id="login-screen">
-    <h1>Private Chat</h1>
+    <!-- Added logo to the login screen -->
+    <img id="login-logo" src="assets/images/logo.png" alt="Logo">
+    <h1>Talksy</h1>
     <p>Enter your name and the special code to join:</p>
     <input type="text" id="name-input" placeholder="Enter your name">
     <input type="password" id="access-code" placeholder="Enter Code">
@@ -21,7 +25,7 @@
 
   <div id="chat-screen" style="display: none;">
     <div id="chat-header">
-      <h1>Chat Room</h1>
+      <h1>Welcome to Talksy</h1>
       <button id="admin-button">Admin Panel</button>
       <button id="toggle-dark-mode">Dark Mode</button>
     </div>
@@ -38,6 +42,21 @@
     <button id="clear-chat-button">Clear All Messages</button>
   </div>
 
-  <script src="script.js" type="module"></script>
+  <!-- Music Player Section -->
+  <div id="music-player">
+    <h2>Music Player</h2>
+    <audio id="audio-player">
+      <source id="audio-source" src="assets/music/Tobu - Candyland.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <div id="music-controls">
+      <button id="play-song">Play</button>
+      <button id="pause-song" disabled>Pause</button>
+      <button id="next-song">Next</button>
+    </div>
+    <p id="current-song">Now Playing: Candyland</p>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
