@@ -138,3 +138,27 @@ body.dark-mode .message.received {
 #send-button:hover {
   background-color: #0056b3;
 }
+
+/* Music Player Styling */
+#music-player {
+  margin: 20px auto;
+  text-align: center;
+}
+
+#music-controls button {
+  margin: 5px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#music-controls button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+#music-controls button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
