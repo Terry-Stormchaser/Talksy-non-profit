@@ -13,6 +13,15 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
+// Authenticate user anonymously
+firebase.auth().signInAnonymously()
+  .then(() => {
+    console.log("User signed in anonymously");
+  })
+  .catch((error) => {
+    console.error("Error during anonymous sign-in:", error);
+  });
+
 // Join Chat Functionality
 const loginButton = document.getElementById("login-button");
 const nameInput = document.getElementById("name-input");
@@ -42,7 +51,8 @@ loginButton.addEventListener("click", () => {
   loginScreen.style.display = "none";
   chatScreen.style.display = "block";
 
-  database.ref("users").push({ username }).then(() => {
+  const userId = firebase.auth().currentUser.uid; // Get the anonymous user ID
+  database.ref("users/" + userId).set({ username }).then(() => {
     console.log(`${username} joined the chat.`);
   }).catch((error) => {
     console.error("Error storing user in Firebase:", error);
@@ -63,6 +73,8 @@ sendButton.addEventListener("click", () => {
       message,
       timestamp,
       sender: currentUser // Include the sender's name
+    }).catch((error) => {
+      console.error("Error sending message:", error);
     });
     messageInput.value = "";
   }
