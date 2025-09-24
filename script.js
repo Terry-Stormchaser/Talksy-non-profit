@@ -1,4 +1,7 @@
 // Firebase configuration (replace with your own configuration from Firebase Console)
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+
 const firebaseConfig = {
     apiKey: "AIzaSyC0Q_CU8rNmJkMOG7a5bTyL-EeP3lTL4nE",
     authDomain: "talksy-24776.firebaseapp.com",
