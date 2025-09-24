@@ -2,6 +2,7 @@
 const firebaseConfig = {
   apiKey: "AIzaSyC0Q_CU8rNmJkMOG7a5bTyL-EeP3lTL4nE",
   authDomain: "talksy-24776.firebaseapp.com",
+  databaseURL: "https://private-chat-experimental-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "talksy-24776",
   storageBucket: "talksy-24776.firebasestorage.app",
   messagingSenderId: "1011824777157",
