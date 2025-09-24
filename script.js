@@ -1,22 +1,18 @@
 // Firebase configuration (replace with your own configuration from Firebase Console)
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-
 const firebaseConfig = {
-    apiKey: "AIzaSyC0Q_CU8rNmJkMOG7a5bTyL-EeP3lTL4nE",
-    authDomain: "talksy-24776.firebaseapp.com",
-    projectId: "talksy-24776",
-    storageBucket: "talksy-24776.firebasestorage.app",
-    messagingSenderId: "1011824777157",
-    appId: "1:1011824777157:web:777d2545916b353d839dac",
-    measurementId: "G-9M8QRFSDT2"
-  };
+  apiKey: "AIzaSyC0Q_CU8rNmJkMOG7a5bTyL-EeP3lTL4nE",
+  authDomain: "talksy-24776.firebaseapp.com",
+  projectId: "talksy-24776",
+  storageBucket: "talksy-24776.firebasestorage.app",
+  messagingSenderId: "1011824777157",
+  appId: "1:1011824777157:web:777d2545916b353d839dac",
+  measurementId: "G-9M8QRFSDT2"
+};
 
-  // Initialize Firebase
-  //const app = initializeApp(firebaseConfig);
-  //const analytics = getAnalytics(app);
-  firebase.initializeApp(firebaseConfig);
-  const database = firebase.database();
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+
 // Authenticate user anonymously
 firebase.auth().signInAnonymously()
   .then(() => {
