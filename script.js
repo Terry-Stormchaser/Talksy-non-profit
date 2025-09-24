@@ -13,9 +13,10 @@ const firebaseConfig = {
   };
 
   // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-
+  //const app = initializeApp(firebaseConfig);
+  //const analytics = getAnalytics(app);
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
 // Authenticate user anonymously
 firebase.auth().signInAnonymously()
   .then(() => {
