@@ -1,17 +1,17 @@
 // Firebase configuration (replace with your own configuration from Firebase Console)
 const firebaseConfig = {
-  apiKey: "AIzaSyBX23Wb2QQpdiS50Ta2grjxu8LELNlneww",
-  authDomain: "private-chat-4c475.firebaseapp.com",
-  databaseURL: "https://private-chat-4c475-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "private-chat-4c475",
-  storageBucket: "private-chat-4c475.firebasestorage.app",
-  messagingSenderId: "303322714070",
-  appId: "1:303322714070:web:4a1cc32e85bf5eec935e77"
-};
+    apiKey: "AIzaSyC0Q_CU8rNmJkMOG7a5bTyL-EeP3lTL4nE",
+    authDomain: "talksy-24776.firebaseapp.com",
+    projectId: "talksy-24776",
+    storageBucket: "talksy-24776.firebasestorage.app",
+    messagingSenderId: "1011824777157",
+    appId: "1:1011824777157:web:777d2545916b353d839dac",
+    measurementId: "G-9M8QRFSDT2"
+  };
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
 
 // Authenticate user anonymously
 firebase.auth().signInAnonymously()
